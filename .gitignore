@@ -1,0 +1,9 @@
+# Bỏ qua file rác của Python
+__pycache__/
+*.pyc
+
+# Bỏ qua file cấu hình của VS Code
+.vscode/
+
+# Bỏ qua thư mục chứa các file Excel gốc (tránh rò rỉ dữ liệu)
+backend/data/
