@@ -4,6 +4,3 @@ __pycache__/
 
 # Bỏ qua file cấu hình của VS Code
 .vscode/
-
-# Bỏ qua thư mục chứa các file Excel gốc (tránh rò rỉ dữ liệu)
-backend/data/
