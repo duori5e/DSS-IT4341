@@ -15,8 +15,8 @@ Mở Command Prompt/Terminal và chạy lần lượt các lệnh sau:
 
 ```cmd
 # Clone dự án về máy
-git clone https://github.com/Tên_Của_Bạn/DSS-SoICT.git
-cd DSS-SoICT
+git clone https://github.com/duori5e/DSS-IT4341
+cd DSS-4341
 
 # Tạo và kích hoạt môi trường ảo (nếu dùng Conda)
 conda create -n course python=3.11
@@ -60,5 +60,3 @@ python seed_data.py
 Nếu Terminal thông báo `-> Thành công! Toàn bộ dữ liệu đã nằm trong PostgreSQL.`, bạn đã hoàn tất việc thiết lập cơ sở dữ liệu và có thể bắt đầu phát triển các API tiếp theo.
 
 ---
-
-**Lưu ý:** Ở dòng lệnh clone dự án (`git clone ...`), hãy thay `Tên_Của_Bạn` bằng tên người dùng GitHub thực tế của bạn hoặc cập nhật URL thành địa chỉ repository.
