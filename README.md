@@ -13,14 +13,14 @@ Mở Command Prompt/Terminal và chạy lần lượt các lệnh sau:
 
 ```cmd
 # Clone dự án về máy (nhớ thay link bằng repo thực tế của bạn)
-git clone https://github.com/Tên_Của_Bạn/DSS-SoICT.git
+git clone https://github.com/duori5e/DSS-IT4341
 cd DSS-SoICT
 
 # Tạo và kích hoạt môi trường ảo (nếu dùng Conda)
 conda create -n course python=3.11
 conda activate course
 
-# Cài đặt các thư viện bắt buộc (đã bao gồm python-dotenv)
+# Cài đặt các thư viện bắt buộc 
 pip install fastapi uvicorn sqlalchemy psycopg psycopg-binary pandas openpyxl python-dotenv
 ```
 
@@ -43,7 +43,7 @@ uvicorn main:app --reload
 Khi Terminal hiện dòng chữ `Application startup complete.`, hãy nhấn `Ctrl + C` để tắt server.
 
 ### 4. Nạp dữ liệu tự động (Seed Data)
-Để đẩy dữ liệu từ các file Excel mẫu vào database (có bao gồm tự động xử lý trùng lặp và loại bỏ dữ liệu mồ côi), hãy chạy script sau:
+Để đẩy dữ liệu từ các file Excel mẫu vào database, hãy chạy script sau:
 
 ```cmd
 cd database
