@@ -1,9 +1,13 @@
-# database/connection.py
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# Định dạng: postgresql://[user]:[password]@[host]:[port]/[tên_database]
-SQLALCHEMY_DATABASE_URL = ""
+# Kích hoạt tính năng đọc file .env
+load_dotenv()
+
+# Rút chuỗi URL kết nối từ file .env ra
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
