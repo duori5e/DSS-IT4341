@@ -1,18 +1,16 @@
 from fastapi import FastAPI
 from database.connection import engine, Base
+from routers import course, lecturer, classes, dss # Import thêm dss
 
-# Import chuẩn tên file và tên Class
-from models.course import Course
-from models.lecturer import Lecturer
-from models.class_model import ClassModel
-from models.lecturer_course import LecturerCourse
-from models.assignment import ClassLecture
-
-# Bắn lệnh tạo bảng vào PostgreSQL
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="SoICT Scheduler API")
 
+app.include_router(course.router)
+app.include_router(lecturer.router)
+app.include_router(classes.router)
+app.include_router(dss.router) # Đăng ký API DSS
+
 @app.get("/")
-def read_root():
-    return {"message": "Database DSS đã kết nối và tạo bảng thành công!"}
+def root():
+    return {"message": "Hệ thống DSS SoICT đã sẵn sàng!"}

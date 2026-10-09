@@ -1,10 +1,17 @@
 import pandas as pd
 import os
+from sqlalchemy import text
 from connection import engine
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 
 def seed_database():
+    print("Đang dọn dẹp dữ liệu cũ...")
+    # Dọn sạch dữ liệu cả 5 bảng nhưng vẫn giữ nguyên cấu trúc và Khóa ngoại (Foreign Keys)
+    with engine.connect() as conn:
+        conn.execute(text("TRUNCATE TABLE courses, lecturers, classes, lecturer_courses, class_lectures CASCADE;"))
+        conn.commit()
+
     print("Bắt đầu nạp dữ liệu từ Excel vào PostgreSQL...")
 
     # 1. Nạp Courses
@@ -15,7 +22,7 @@ def seed_database():
         "Course_Id": "course_id", "Course_name": "course_name", "Weight": "weight"
     }, inplace=True)
     df_course.to_sql("courses", con=engine, if_exists="append", index=False)
-    valid_courses = df_course['course_id'].unique() # Lưu lại danh sách ID hợp lệ
+    valid_courses = df_course['course_id'].unique()
 
     # 2. Nạp Lecturers
     print("2/5: Đang nạp bảng Lecturers...")
@@ -40,7 +47,6 @@ def seed_database():
         "Registered_Count": "registered_count", "Max": "max_capacity",
         "Status": "status", "Class_Type": "class_type", "Management_Code": "management_code"
     }, inplace=True)
-    # Lọc bỏ các lớp có mã môn học không tồn tại
     df_class = df_class[df_class['course_id'].isin(valid_courses)]
     df_class.to_sql("classes", con=engine, if_exists="append", index=False)
     valid_classes = df_class['class_id'].unique()
@@ -50,7 +56,6 @@ def seed_database():
     df_lc = pd.read_excel(f"{DATA_DIR}/lecturer_course.xlsx")
     df_lc.drop_duplicates(inplace=True)
     df_lc.rename(columns={"Lecturer_ID": "lecturer_id", "Course_Id": "course_id"}, inplace=True)
-    # Chỉ giữ lại các dòng mà cả Giảng viên và Môn học đều hợp lệ
     df_lc = df_lc[df_lc['lecturer_id'].isin(valid_lecturers) & df_lc['course_id'].isin(valid_courses)]
     df_lc.to_sql("lecturer_courses", con=engine, if_exists="append", index=False)
 
@@ -59,11 +64,10 @@ def seed_database():
     df_cl = pd.read_excel(f"{DATA_DIR}/class_lecturer.xlsx")
     df_cl.drop_duplicates(inplace=True)
     df_cl.rename(columns={"Class_Id": "class_id", "Lecturer_ID": "lecturer_id"}, inplace=True)
-    # Chỉ giữ lại các dòng mà cả Lớp và Giảng viên đều hợp lệ
     df_cl = df_cl[df_cl['class_id'].isin(valid_classes) & df_cl['lecturer_id'].isin(valid_lecturers)]
     df_cl.to_sql("class_lectures", con=engine, if_exists="append", index=False)
 
-    print("-> Thành công! Toàn bộ dữ liệu đã nằm trong PostgreSQL.")
+    print("-> Thành công! Toàn bộ dữ liệu mới đã được cập nhật vào PostgreSQL.")
 
 if __name__ == "__main__":
     seed_database()
