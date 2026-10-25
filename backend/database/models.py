@@ -1,5 +1,5 @@
 # backend/database/models.py
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 from database.connection import Base
 
 class Course(Base):
@@ -8,6 +8,9 @@ class Course(Base):
     course_id = Column(String, primary_key=True, index=True)
     course_name = Column(String)
     weight = Column(String)
+    lt_bt = Column(Integer, default=0)
+    bt = Column(Integer, default=0)
+    tn = Column(Integer, default=0)
 
 # Cập nhật thêm vào cuối file backend/database/models.py
 class Lecturer(Base):
@@ -45,6 +48,7 @@ class LecturerCourse(Base):
     __tablename__ = "lecturer_courses"
     lecturer_id = Column(String, primary_key=True)
     course_id = Column(String, primary_key=True)
+    teaching_count = Column(Integer, default=0)
 
 class ClassLecture(Base):
     __tablename__ = "class_lectures"
