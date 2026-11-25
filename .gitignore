@@ -1,9 +1,19 @@
-# Bỏ qua file rác của Python
-__pycache__/
-*.pyc
-
-# Bỏ qua file cấu hình của VS Code
-.vscode/
-
-# Bỏ qua file chứa mật khẩu cục bộ
+# Biến môi trường & Virtual Environment
 .env
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# File cài đặt nặng & bản sao lưu dữ liệu
+Miniconda*
+*.sh
+*.bak.xlsx
+
+# IDE & Hệ điều hành
+.vscode/
+.idea/
+.DS_Store
